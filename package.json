@@ -1,0 +1,26 @@
+{
+  "name": "towerdefenders",
+  "version": "1.0.0",
+  "description": "\"\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/GrbicD/towerdefenders.git"
+  },
+  "author": "Dragan Grbic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/GrbicD/towerdefenders/issues"
+  },
+  "homepage": "https://gitlab.com/GrbicD/towerdefenders#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.19.0",
+    "socket.io": "^4.5.0"
+  }
+}
