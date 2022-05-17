@@ -4,4 +4,5 @@ WORKDIR ./app
 COPY package*.json ./
 RUN npm install
 COPY . .
-CMD node index.js
+EXPOSE 3000
+CMD node .c/src/db/db_connect.js

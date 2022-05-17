@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  db:
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/src/db/dbase
+    networks:
+      - net
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "8080:80"
+    networks:
+      - net
+
+  app:
+    container_name: nodejsapp
+    depends_on:
+      - db
+      - pgadmin
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - '3001:3000'
+    stdin_open: true
+    tty: true
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
+    name: net
+
+volumes:
+  db_data:
