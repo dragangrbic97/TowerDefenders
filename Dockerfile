@@ -5,4 +5,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
-CMD node .c/src/db/db_connect.js
+CMD node /src/db/db_connect.js
