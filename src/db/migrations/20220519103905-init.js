@@ -1,47 +1,21 @@
 'use strict';
-const { DataTypes } = require('sequelize')
-
+const defender = require ( '../columns/defender')
+const tower = require ( '../columns/tower')
+const round = require ('../columns/round')
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  up: async (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.createTable("Defender", {
-        nickname: DataTypes.STRING,
-        attack_points_generated: DataTypes.INTEGER,
-        defense_points_generated: DataTypes.INTEGER,
-        tower: DataTypes.STRING
-      }),
-      queryInterface.createTable("Tower",{
-        id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true
-        },
-        health: DataTypes.INTEGER,
-        defense: DataTypes.INTEGER,
-        round: DataTypes.INTEGER,
-        defender_count: DataTypes.INTEGER
-      }),
-      queryInterface.createTable("Round",{
-        id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true
-        },
-        time_created: DataTypes.DATE,
-        global_defender_count: DataTypes.INTEGER,
-        hocus_tower: DataTypes.ENUM('one','two'),
-        pocus_tower: DataTypes.ENUM('one','two')
-      })
+      queryInterface.createTable("Defender", defender(Sequelize)),
+      queryInterface.createTable("Tower", tower(Sequelize)),
+      queryInterface.createTable("Round",  round(Sequelize))
     ]);
   },
 
-  async down (queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
     return Promise.all ([
       queryInterface.dropTable("Defender"),
       queryInterface.dropTable("Tower"),
       queryInterface.dropTable("Round")
     ])
   }
-};
+}

@@ -1,9 +1,11 @@
-FROM node:12-slim
+FROM node:17-slim
 RUN mkdir ./app
 WORKDIR ./app
 COPY package*.json ./
-COPY ./src/config/config.json ./config/
-COPY ./src/db/migrations/ ./migrations
+COPY ./src/db/config/config.json ./db/config/
+COPY ./src/db/migrations/ ./db/migrations
+COPY ./src/db/columns/ ./db/columns
 RUN npm install
 COPY . .
+WORKDIR ./db
 CMD npx sequelize-cli db:migrate

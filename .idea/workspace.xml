@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17221fff-367c-41c2-a862-187b19d8319a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Dockerfile.nodeapp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/columns/defender.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/columns/round.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/columns/tower.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/models/defender.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/models/round.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/models/tower.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/migrations/init.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.init" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/db_connect.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/db_connect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile.init" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.init" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile.nodeapp" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.nodeapp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/config.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/init.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/migrations/20220519103905-init.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/migrations/20220519103905-init.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +57,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/db/migrations/config" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
@@ -60,6 +65,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/db/migrations/config" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
@@ -78,7 +84,10 @@
       <workItem from="1652254446733" duration="17621000" />
       <workItem from="1652702620614" duration="16194000" />
       <workItem from="1652952273319" duration="13377000" />
-      <workItem from="1653477012790" duration="5724000" />
+      <workItem from="1653477012790" duration="7978000" />
+      <workItem from="1653563311888" duration="7087000" />
+      <workItem from="1653645169427" duration="13118000" />
+      <workItem from="1653907511174" duration="8873000" />
     </task>
     <servers />
   </component>
