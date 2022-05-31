@@ -27,14 +27,24 @@ services:
     networks:
       - net
 
+  init_migration:
+    container_name: seq_init_migration
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile.init
+    stdin_open: true
+    networks:
+      - net
+
   app:
     container_name: nodejsapp
     depends_on:
-      - db
-      - pgadmin
+      - init_migration
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.nodeapp
     restart: unless-stopped
     ports:
       - '3001:3000'
