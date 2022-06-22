@@ -2,20 +2,21 @@
 const defender = require ( '../columns/defender')
 const tower = require ( '../columns/tower')
 const round = require ('../columns/round')
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.createTable("Defender", defender(Sequelize)),
-      queryInterface.createTable("Tower", tower(Sequelize)),
-      queryInterface.createTable("Round",  round(Sequelize))
+      queryInterface.createTable("defender", defender(Sequelize)),
+      queryInterface.createTable("tower", tower(Sequelize)),
+      queryInterface.createTable("round",  round(Sequelize))
     ]);
   },
 
   down: async (queryInterface, Sequelize) => {
     return Promise.all ([
-      queryInterface.dropTable("Defender"),
-      queryInterface.dropTable("Tower"),
-      queryInterface.dropTable("Round")
+      queryInterface.dropTable("defender"),
+      queryInterface.dropTable("tower"),
+      queryInterface.dropTable("round")
     ])
   }
-}
+};

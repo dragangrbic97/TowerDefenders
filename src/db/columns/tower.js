@@ -7,8 +7,16 @@ module.exports = () => ({
         autoIncrement: true,
         primaryKey: true
     },
-    health: DataTypes.INTEGER,
-    defense: DataTypes.INTEGER,
-    round: DataTypes.INTEGER,
-    defender_count: DataTypes.INTEGER
+    health: {
+        type: DataTypes.INTEGER,
+        defaultValue: 5000
+    },
+    defense: {
+        type: DataTypes.INTEGER,
+        defaultValue: 2000
+    },
+    defender_count: {
+        type: DataTypes.SMALLINT,
+        defaultValue: 0
+    }
 })

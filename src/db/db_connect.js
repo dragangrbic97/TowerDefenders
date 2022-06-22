@@ -1,13 +1,13 @@
 const { Sequelize } = require('sequelize')
 require('dotenv/config')
 
-console.log(process.env.DB_PORT, process.env.DB_HOST)
+console.log("PORT:" + process.env.DB_PORT,"HOST:" + process.env.DB_HOST);
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USERNAME,
-    process.env.DB_PASSWORD, {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
+    'test_db',
+    'root',
+    'root', {
+        host: 'localhost',
+        port: 5433,
         dialect: 'postgres',
         pool: {
             max: 5,
@@ -30,4 +30,5 @@ sequelize
         console.log('ERROR - Unable to connect to the database:', err)
     })
 
-module.exports = sequelize
+
+module.exports = { sequelize, Sequelize };
