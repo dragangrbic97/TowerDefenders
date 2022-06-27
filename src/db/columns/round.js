@@ -8,7 +8,11 @@ module.exports = () => ({
         primaryKey: true
     },
     time_created: DataTypes.DATE,
-    global_defender_count: DataTypes.INTEGER,
-    hocus_tower: DataTypes.ENUM('one','two'),
-    pocus_tower: DataTypes.ENUM('one','two')
+    global_defender_count: {
+        type: DataTypes.SMALLINT,
+        defaultValue: 0
+    },
+    hocus_tower: DataTypes.INTEGER,
+    pocus_tower: DataTypes.INTEGER,
+    is_active: DataTypes.BOOLEAN
 })

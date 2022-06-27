@@ -3,8 +3,8 @@
     "username": "root",
     "password": "root",
     "database": "test_db",
-    "host": "db",
-    "port": 5432,
+    "host": "127.0.0.1",
+    "port": 5433,
     "dialect": "postgres"
   },
   "test": {

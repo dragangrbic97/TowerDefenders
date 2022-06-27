@@ -13,7 +13,7 @@ services:
     volumes:
       - db_data:/src/db/dbase
     networks:
-      - net
+      - backendland
 
   pgadmin:
     container_name: pgadmin_container
@@ -25,7 +25,7 @@ services:
     ports:
       - "8080:80"
     networks:
-      - net
+      - backendland
 
   init_migration:
     container_name: seq_init_migration
@@ -36,7 +36,7 @@ services:
       dockerfile: Dockerfile.init
     stdin_open: true
     networks:
-      - net
+      - backendland
 
   app:
     container_name: nodejsapp
@@ -51,12 +51,12 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - net
+      - backendland
 
 networks:
-  net:
+  backendland:
     driver: bridge
-    name: net
+    name: backendland
 
 volumes:
   db_data:
