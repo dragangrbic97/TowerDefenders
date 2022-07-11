@@ -16,7 +16,8 @@ const data = {
     enemyTowerName: "",
     enemyTowerHealth: DEFAULT_TOWER_HEALTH,
     enemyTowerDefenders: DEFAULT_TOWER_DEFENSE,
-    defenderReady: false
+    defenderReady: false,
+    serverUri: ""
 }
 
 export async function createPlayer(nick: string) {
@@ -38,6 +39,7 @@ export async function createPlayer(nick: string) {
             data.towerName = defenderData.tower = "hocus";
             data.enemyTowerName = "pocus";
             data.defenderReady = true;
+            data.serverUri="ws://localhost:4444";
             defenderData.tower_id = hocus.id;
             await updateTower(dataValues.hocus_tower);
             await updateRound(dataValues);
@@ -55,6 +57,7 @@ export async function createPlayer(nick: string) {
             data.towerName = defenderData.tower = "pocus";
             data.enemyTowerName = "hocus";
             data.defenderReady = true;
+            data.serverUri="ws://localhost:5555";
             defenderData.tower_id = pocus.id;
             await updateTower(dataValues.pocus_tower);
             await updateRound(dataValues);

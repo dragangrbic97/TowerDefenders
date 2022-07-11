@@ -31,6 +31,7 @@ services:
     container_name: seq_init_migration
     depends_on:
       - db
+    image: &appimg appimg
     build:
       context: .
       dockerfile: Dockerfile.init
@@ -40,11 +41,12 @@ services:
 
   app:
     container_name: nodejsapp
+    image: *appimg
     depends_on:
       - init_migration
-    build:
-      context: .
-      dockerfile: Dockerfile.nodeapp
+    build:                             //nece trebati
+      context: .                       //nece trebati
+      dockerfile: Dockerfile.nodeapp   //nece trebati
     restart: unless-stopped
     ports:
       - '3001:3000'
