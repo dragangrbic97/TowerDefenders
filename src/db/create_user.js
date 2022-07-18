@@ -50,7 +50,8 @@ var data = {
     enemyTowerName: "",
     enemyTowerHealth: Constants_1.DEFAULT_TOWER_HEALTH,
     enemyTowerDefenders: Constants_1.DEFAULT_TOWER_DEFENSE,
-    defenderReady: false
+    defenderReady: false,
+    serverUri: ""
 };
 function createPlayer(nick) {
     return __awaiter(this, void 0, void 0, function () {
@@ -76,6 +77,7 @@ function createPlayer(nick) {
                     data.towerName = defenderData.tower = "hocus";
                     data.enemyTowerName = "pocus";
                     data.defenderReady = true;
+                    data.serverUri = "ws://localhost:4444";
                     defenderData.tower_id = hocus.id;
                     return [4 /*yield*/, (0, tower_repo_1.updateTower)(dataValues.hocus_tower)];
                 case 3:
@@ -101,6 +103,7 @@ function createPlayer(nick) {
                     data.towerName = defenderData.tower = "pocus";
                     data.enemyTowerName = "hocus";
                     data.defenderReady = true;
+                    data.serverUri = "ws://localhost:5555";
                     defenderData.tower_id = pocus.id;
                     return [4 /*yield*/, (0, tower_repo_1.updateTower)(dataValues.pocus_tower)];
                 case 10:
