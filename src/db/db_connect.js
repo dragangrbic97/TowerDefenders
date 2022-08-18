@@ -31,4 +31,4 @@ sequelize
     })
 
 
-module.exports = { sequelize, Sequelize };
+ module.exports = { sequelize, Sequelize };

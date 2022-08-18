@@ -47,7 +47,7 @@ function createRound() {
             switch (_b.label) {
                 case 0:
                     _a = {
-                        id: Math.floor(1000 + Math.random() * 9000),
+                        id: Math.floor(100000 + Math.random() * 900000),
                         time_created: new Date(),
                         global_defender_count: 0
                     };

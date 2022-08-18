@@ -38,8 +38,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.initRabbitMq = exports.makeChannel = exports.makeConnection = void 0;
 var amqplib_1 = require("amqplib");
+var connection;
 function makeConnection() {
-    var connection;
     return function createConnection() {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -98,3 +98,9 @@ function initRabbitMq() {
     });
 }
 exports.initRabbitMq = initRabbitMq;
+/*export async function getChannel() {
+    if (!channel){
+        return await initRabbitMq()
+    }
+    return channel
+}*/ 

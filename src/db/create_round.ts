@@ -4,7 +4,7 @@ import { createTower } from './create_tower'
 export async function createRound() {
 
     const roundData = {
-        id: Math.floor(1000 + Math.random() * 9000),
+        id: Math.floor(100000 + Math.random() * 900000),
         time_created: new Date(),
         global_defender_count: 0,
         hocus_tower: await createTower(),

@@ -1,14 +1,15 @@
 import Tower = require('./models/tower');
 import { findRound, updateRound } from './models/round.repo'
-import { updateTower } from './models/tower.repo'
+import { updateTowerIncremental, updateTowerHealthPoints } from './models/tower.repo'
 import { createDefender } from './models/defender.repo'
 import {
     DEFAULT_ATTACK_POINTS_GENERATED, DEFAULT_DEFENSE_POINTS_GENERATED,
-    DEFAULT_TOWER_DEFENSE, DEFAULT_TOWER_HEALTH, MAX_PLAYER_NUMBER,
-    TOWER
+    DEFAULT_TOWER_DEFENSE, DEFAULT_TOWER_HEALTH, DEFAULT_HOCUS_PORT,
+    DEFAULT_POCUS_PORT, WEBSOCKET_BASE_URL, TOWER
 } from '../utils/Constants'
 
 const data = {
+    defenderId: 0,
     towerName: "",
     towerHealth: DEFAULT_TOWER_HEALTH,
     towerDefense: DEFAULT_TOWER_DEFENSE,
@@ -20,9 +21,16 @@ const data = {
     serverUri: ""
 }
 
+async function writeData(dataValues: any) {
+    await updateTowerHealthPoints(dataValues.hocus_tower, 1000);
+    await updateTowerHealthPoints(dataValues.pocus_tower, 1000);
+    await updateRound(dataValues);
+}
+
 export async function createPlayer(nick: string) {
 
     const defenderData = {
+        id: Math.floor(100000 + Math.random() * 900000),
         nickname: nick,
         attack_points_generated: DEFAULT_ATTACK_POINTS_GENERATED,
         defense_points_generated: DEFAULT_DEFENSE_POINTS_GENERATED,
@@ -32,17 +40,19 @@ export async function createPlayer(nick: string) {
 
     const dataValues = await findRound(true)
 
-    if (dataValues && dataValues.global_defender_count < MAX_PLAYER_NUMBER) {
+    if (dataValues) {
 
         const hocus = (await Tower.findOne({ where: { id: dataValues.hocus_tower }, raw: true})) as TOWER | null
-        if (hocus && hocus.defender_count == 0) {
+        const pocus = (await Tower.findOne({ where: { id: dataValues.pocus_tower }, raw: true})) as TOWER | null
+        if (hocus && pocus && (hocus.defender_count <= pocus.defender_count)) {
+            data.defenderId = defenderData.id;
             data.towerName = defenderData.tower = "hocus";
             data.enemyTowerName = "pocus";
             data.defenderReady = true;
-            data.serverUri="ws://localhost:4444";
+            data.serverUri=(WEBSOCKET_BASE_URL+DEFAULT_HOCUS_PORT);
             defenderData.tower_id = hocus.id;
-            await updateTower(dataValues.hocus_tower);
-            await updateRound(dataValues);
+            await updateTowerIncremental(dataValues.hocus_tower);
+            await writeData(dataValues);
             try {
                 await createDefender(defenderData);
                 console.log("New player with nickname \"" + nick + "\" created");
@@ -52,16 +62,15 @@ export async function createPlayer(nick: string) {
             }
         }
 
-        const pocus = (await Tower.findOne({ where: { id: dataValues.pocus_tower } , raw: true})) as TOWER | null
-        if (pocus && pocus.defender_count == 0) {
+        if (hocus && pocus && (hocus.defender_count > pocus.defender_count)) {
+            data.defenderId = defenderData.id;
             data.towerName = defenderData.tower = "pocus";
             data.enemyTowerName = "hocus";
             data.defenderReady = true;
-            data.serverUri="ws://localhost:5555";
+            data.serverUri=(WEBSOCKET_BASE_URL+DEFAULT_POCUS_PORT);
             defenderData.tower_id = pocus.id;
-            await updateTower(dataValues.pocus_tower);
-            await updateRound(dataValues);
-
+            await updateTowerIncremental(dataValues.pocus_tower);
+            await writeData(dataValues);
             try {
                 await createDefender(defenderData);
                 console.log("New player with nickname \"" + nick + "\" created");
@@ -71,6 +80,6 @@ export async function createPlayer(nick: string) {
             }
         }
     } else {
-        console.log("Round have MAX number of players");
+        console.log("ERROR occurred! There is no active round.");
     }
 }

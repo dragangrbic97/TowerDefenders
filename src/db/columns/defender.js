@@ -1,6 +1,10 @@
 const DataTypes = require ('sequelize')
 
 module.exports = () => ({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
     nickname: {
         type: DataTypes.STRING(32),
         unique: true,
@@ -9,8 +13,5 @@ module.exports = () => ({
     attack_points_generated: DataTypes.INTEGER,
     defense_points_generated: DataTypes.INTEGER,
     tower: DataTypes.STRING(32),
-    tower_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-    }
+    tower_id: DataTypes.INTEGER
 })
