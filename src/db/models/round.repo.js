@@ -36,14 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.findRound = exports.updateRound = void 0;
+exports.getTowerId = exports.findRound = exports.updateRound = void 0;
 var Round = require("./round");
-var db_connect_1 = require("../db_connect");
+var sequelize_1 = require("sequelize");
 function updateRound(dataValues) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, Round.update({ global_defender_count: db_connect_1.sequelize.literal('global_defender_count+1') }, { where: { id: dataValues.id } })];
+                case 0: return [4 /*yield*/, Round.update({ global_defender_count: sequelize_1.Sequelize.literal('global_defender_count+1') }, { where: { id: dataValues.id } })];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -66,3 +66,28 @@ function findRound(key) {
     });
 }
 exports.findRound = findRound;
+function getTowerId(name) {
+    return __awaiter(this, void 0, void 0, function () {
+        var dataValues, hocus_tower, dataValues, pocus_tower;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!(name === 'hocus')) return [3 /*break*/, 2];
+                    return [4 /*yield*/, findRound(true)];
+                case 1:
+                    dataValues = _a.sent();
+                    hocus_tower = dataValues.hocus_tower;
+                    return [2 /*return*/, hocus_tower];
+                case 2:
+                    if (!(name === 'pocus')) return [3 /*break*/, 4];
+                    return [4 /*yield*/, findRound(true)];
+                case 3:
+                    dataValues = _a.sent();
+                    pocus_tower = dataValues.pocus_tower;
+                    return [2 /*return*/, pocus_tower];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.getTowerId = getTowerId;

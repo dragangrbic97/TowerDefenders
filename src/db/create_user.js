@@ -43,6 +43,7 @@ var tower_repo_1 = require("./models/tower.repo");
 var defender_repo_1 = require("./models/defender.repo");
 var Constants_1 = require("../utils/Constants");
 var data = {
+    defenderId: 0,
     towerName: "",
     towerHealth: Constants_1.DEFAULT_TOWER_HEALTH,
     towerDefense: Constants_1.DEFAULT_TOWER_DEFENSE,
@@ -53,13 +54,32 @@ var data = {
     defenderReady: false,
     serverUri: ""
 };
+function writeData(dataValues) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, (0, tower_repo_1.updateTowerHealthPoints)(dataValues.hocus_tower, 1000)];
+                case 1:
+                    _a.sent();
+                    return [4 /*yield*/, (0, tower_repo_1.updateTowerHealthPoints)(dataValues.pocus_tower, 1000)];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, (0, round_repo_1.updateRound)(dataValues)];
+                case 3:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
 function createPlayer(nick) {
     return __awaiter(this, void 0, void 0, function () {
-        var defenderData, dataValues, hocus, error_1, pocus, error_2;
+        var defenderData, dataValues, hocus, pocus, error_1, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     defenderData = {
+                        id: Math.floor(100000 + Math.random() * 900000),
                         nickname: nick,
                         attack_points_generated: Constants_1.DEFAULT_ATTACK_POINTS_GENERATED,
                         defense_points_generated: Constants_1.DEFAULT_DEFENSE_POINTS_GENERATED,
@@ -69,46 +89,49 @@ function createPlayer(nick) {
                     return [4 /*yield*/, (0, round_repo_1.findRound)(true)];
                 case 1:
                     dataValues = _a.sent();
-                    if (!(dataValues && dataValues.global_defender_count < Constants_1.MAX_PLAYER_NUMBER)) return [3 /*break*/, 16];
+                    if (!dataValues) return [3 /*break*/, 16];
                     return [4 /*yield*/, Tower.findOne({ where: { id: dataValues.hocus_tower }, raw: true })];
                 case 2:
                     hocus = (_a.sent());
-                    if (!(hocus && hocus.defender_count == 0)) return [3 /*break*/, 8];
+                    return [4 /*yield*/, Tower.findOne({ where: { id: dataValues.pocus_tower }, raw: true })];
+                case 3:
+                    pocus = (_a.sent());
+                    if (!(hocus && pocus && (hocus.defender_count <= pocus.defender_count))) return [3 /*break*/, 9];
+                    data.defenderId = defenderData.id;
                     data.towerName = defenderData.tower = "hocus";
                     data.enemyTowerName = "pocus";
                     data.defenderReady = true;
-                    data.serverUri = "ws://localhost:4444";
+                    data.serverUri = (Constants_1.WEBSOCKET_BASE_URL + Constants_1.DEFAULT_HOCUS_PORT);
                     defenderData.tower_id = hocus.id;
-                    return [4 /*yield*/, (0, tower_repo_1.updateTower)(dataValues.hocus_tower)];
-                case 3:
-                    _a.sent();
-                    return [4 /*yield*/, (0, round_repo_1.updateRound)(dataValues)];
+                    return [4 /*yield*/, (0, tower_repo_1.updateTowerIncremental)(dataValues.hocus_tower)];
                 case 4:
                     _a.sent();
-                    _a.label = 5;
+                    return [4 /*yield*/, writeData(dataValues)];
                 case 5:
-                    _a.trys.push([5, 7, , 8]);
-                    return [4 /*yield*/, (0, defender_repo_1.createDefender)(defenderData)];
+                    _a.sent();
+                    _a.label = 6;
                 case 6:
+                    _a.trys.push([6, 8, , 9]);
+                    return [4 /*yield*/, (0, defender_repo_1.createDefender)(defenderData)];
+                case 7:
                     _a.sent();
                     console.log("New player with nickname \"" + nick + "\" created");
                     return [2 /*return*/, data];
-                case 7:
+                case 8:
                     error_1 = _a.sent();
                     return [2 /*return*/, console.log(error_1)];
-                case 8: return [4 /*yield*/, Tower.findOne({ where: { id: dataValues.pocus_tower }, raw: true })];
                 case 9:
-                    pocus = (_a.sent());
-                    if (!(pocus && pocus.defender_count == 0)) return [3 /*break*/, 15];
+                    if (!(hocus && pocus && (hocus.defender_count > pocus.defender_count))) return [3 /*break*/, 15];
+                    data.defenderId = defenderData.id;
                     data.towerName = defenderData.tower = "pocus";
                     data.enemyTowerName = "hocus";
                     data.defenderReady = true;
-                    data.serverUri = "ws://localhost:5555";
+                    data.serverUri = (Constants_1.WEBSOCKET_BASE_URL + Constants_1.DEFAULT_POCUS_PORT);
                     defenderData.tower_id = pocus.id;
-                    return [4 /*yield*/, (0, tower_repo_1.updateTower)(dataValues.pocus_tower)];
+                    return [4 /*yield*/, (0, tower_repo_1.updateTowerIncremental)(dataValues.pocus_tower)];
                 case 10:
                     _a.sent();
-                    return [4 /*yield*/, (0, round_repo_1.updateRound)(dataValues)];
+                    return [4 /*yield*/, writeData(dataValues)];
                 case 11:
                     _a.sent();
                     _a.label = 12;
@@ -124,7 +147,7 @@ function createPlayer(nick) {
                     return [2 /*return*/, console.log(error_2)];
                 case 15: return [3 /*break*/, 17];
                 case 16:
-                    console.log("Round have MAX number of players");
+                    console.log("ERROR occurred! There is no active round.");
                     _a.label = 17;
                 case 17: return [2 /*return*/];
             }

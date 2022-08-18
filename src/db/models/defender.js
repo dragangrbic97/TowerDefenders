@@ -4,6 +4,10 @@ Sequelize = db.Sequelize
 const DataTypes = require('sequelize')
 
 const Defender = sequelize.define('defender', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true
+    },
     nickname: {
         type: DataTypes.STRING(32),
         unique: true,
@@ -12,10 +16,7 @@ const Defender = sequelize.define('defender', {
     attack_points_generated: DataTypes.INTEGER,
     defense_points_generated: DataTypes.INTEGER,
     tower: DataTypes.STRING(32),
-    tower_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
-    }
+    tower_id: DataTypes.INTEGER
     },
     {freezeTableName: true});
 

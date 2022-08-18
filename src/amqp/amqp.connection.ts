@@ -1,7 +1,8 @@
 import {connect, Channel, Connection} from 'amqplib'
 
+let connection: Connection
 export function makeConnection() {
-    let connection: Connection
+
 
     return async function createConnection() {
         if (connection) return connection
@@ -31,3 +32,11 @@ export async function initRabbitMq() {
     const createChannel = makeChannel(connection!!)
     return createChannel()
 }
+
+
+/*export async function getChannel() {
+    if (!channel){
+        return await initRabbitMq()
+    }
+    return channel
+}*/

@@ -128,10 +128,10 @@
         },
         methods: {
             emitDefend() {
-                this.socketServer.emit('defend')
+                this.socketServer.emit('defend', this.nickname)
             },
             emitAttack() {
-                this.socketServer.emit('attack')
+                this.socketServer.emit('attack', this.nickname)
             },
             async submitNick() {
                 // Change route with your own
@@ -150,6 +150,7 @@
                     // This part sets socket server
                     this.socketServer.io.uri = response.data.serverUri
                     this.socketServer.emit('connect')
+                    this.socketServer.emit('player_connected', this.nickname)
                 // })
                 console.log('[CLIENT] POST nickname : ' + this.nickname)
             },
@@ -165,12 +166,13 @@
         },
         created() {
             window.onbeforeunload = () => {
-                this.socketServer.emit('disconnect', this.defenderId)
+                this.socketServer.emit('player_disconnected', this.nickname)
             }
             // Change as needed with your own calls
             this.socketServer.on('updateTowerData', (data) => {
                 this.updateTowerData(data)
             })
+
 
             this.socketServer.on('updateTowerData', (data) => {
                 this.updateTowerData(data)

@@ -36,13 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.updateTower = void 0;
+exports.getTowerDefensePoints = exports.getTowerHealthPoints = exports.updateTowerDefensePoints = exports.updateTowerHealthPoints = exports.updateTowerDecremental = exports.updateTowerIncremental = void 0;
 var Tower = require("./tower");
-function updateTower(id) {
+var db_connect_1 = require("../db_connect");
+function updateTowerIncremental(id) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, Tower.update({ defender_count: 1 }, { where: { id: id } })];
+                case 0: return [4 /*yield*/, Tower.update({ defender_count: db_connect_1.sequelize.literal('defender_count+1') }, { where: { id: id } })];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
@@ -50,4 +51,73 @@ function updateTower(id) {
         });
     });
 }
-exports.updateTower = updateTower;
+exports.updateTowerIncremental = updateTowerIncremental;
+function updateTowerDecremental(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Tower.update({ defender_count: db_connect_1.sequelize.literal('defender_count-1') }, { where: { id: id } })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.updateTowerDecremental = updateTowerDecremental;
+function updateTowerHealthPoints(id, points) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Tower.update({ health: db_connect_1.sequelize.literal("health+".concat(points)) }, { where: { id: id } })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.updateTowerHealthPoints = updateTowerHealthPoints;
+function updateTowerDefensePoints(id, points) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Tower.update({ defense: db_connect_1.sequelize.literal("defense+".concat(points)) }, { where: { id: id } })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.updateTowerDefensePoints = updateTowerDefensePoints;
+function getTowerHealthPoints(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var dataValues, health;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Tower.findOne({ where: { id: id }, raw: true })];
+                case 1:
+                    dataValues = _a.sent();
+                    health = dataValues.health;
+                    return [2 /*return*/, health];
+            }
+        });
+    });
+}
+exports.getTowerHealthPoints = getTowerHealthPoints;
+function getTowerDefensePoints(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var dataValues, defense;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Tower.findOne({ where: { id: id }, raw: true })];
+                case 1:
+                    dataValues = _a.sent();
+                    defense = dataValues.defense;
+                    return [2 /*return*/, defense];
+            }
+        });
+    });
+}
+exports.getTowerDefensePoints = getTowerDefensePoints;
