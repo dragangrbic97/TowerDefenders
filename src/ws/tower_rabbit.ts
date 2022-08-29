@@ -33,7 +33,7 @@ io.on('connection', async (socket: any) => {
     });
 
     await channel.consume(QUEUE_1, async function(msg) {
-        if (msg.content.toString()=='update') {
+        if (msg.content.toString() == 'update') {
             let towerData = await getTowerData(towerId);
             let enemyTowerData = await getTowerData(enemyTowerId);
             const data = {
@@ -44,13 +44,13 @@ io.on('connection', async (socket: any) => {
                 enemyTowerHealth: enemyTowerData.health,
                 enemyTowerDefenders: enemyTowerData.defender_count
             }
-            if (data.towerHealth<=0) {
-                data.towerHealth=0;
+            if (data.towerHealth <= 0) {
+                data.towerHealth = 0;
                 socket.emit('updateHocusTowerData', data);
                 socket.emit('gameOver',"LOST");
             }
-            if (data.enemyTowerHealth<=0) {
-                data.enemyTowerHealth=0;
+            if (data.enemyTowerHealth <= 0) {
+                data.enemyTowerHealth = 0;
                 socket.emit('updateHocusTowerData', data);
                 socket.emit('gameOver',"WON" );
             }
