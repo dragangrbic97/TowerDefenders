@@ -28,3 +28,8 @@ export async function getTowerDefensePoints(id: number) {
     const {defense} = dataValues;
     return defense;
 }
+
+export async function getTowerData(id: number) {
+    const data = await Tower.findOne({ where: { id: id}, raw:true });
+    return data;
+}

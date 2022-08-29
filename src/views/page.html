@@ -74,6 +74,11 @@
             <button type='button' class='btn btn-primary' @click='submitNick'>Submit</button>
         </form>
     </div>
+    <div v-if='gameOver' id='title-quote'>
+        <h1>
+            GAME OVER! {{nickname}}, you {{message}}!
+        </h1>
+    </div>
 </div>
 </body>
 <script>
@@ -82,6 +87,8 @@
         el: '#app',
         data: function() {
             return {
+                gameOver: false,
+                message: '',
                 defenderReady: false,
                 towerName: '',
                 towerHealth: 0,
@@ -135,7 +142,7 @@
             },
             async submitNick() {
                 // Change route with your own
-                const response = await axios.post('http://localhost:3000/towerdefenders/defender', {
+                const response = await axios.post('http://'+window.location.hostname+':3000/towerdefenders/defender', {
                     nickname: this.nickname
                 });
                     this.defenderId = response.data.id
@@ -169,13 +176,18 @@
                 this.socketServer.emit('player_disconnected', this.nickname)
             }
             // Change as needed with your own calls
-            this.socketServer.on('updateTowerData', (data) => {
+            this.socketServer.on('updateHocusTowerData', (data) => {
                 this.updateTowerData(data)
             })
 
-
-            this.socketServer.on('updateTowerData', (data) => {
+            this.socketServer.on('updatePocusTowerData', (data) => {
                 this.updateTowerData(data)
+            })
+
+            this.socketServer.on('gameOver', (data) => {
+                this.message=data;
+                this.gameOver=true;
+                this.socketServer.io.removeAllListeners();
             })
 
         }

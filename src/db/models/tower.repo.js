@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getTowerDefensePoints = exports.getTowerHealthPoints = exports.updateTowerDefensePoints = exports.updateTowerHealthPoints = exports.updateTowerDecremental = exports.updateTowerIncremental = void 0;
+exports.getTowerData = exports.getTowerDefensePoints = exports.getTowerHealthPoints = exports.updateTowerDefensePoints = exports.updateTowerHealthPoints = exports.updateTowerDecremental = exports.updateTowerIncremental = void 0;
 var Tower = require("./tower");
 var db_connect_1 = require("../db_connect");
 function updateTowerIncremental(id) {
@@ -121,3 +121,17 @@ function getTowerDefensePoints(id) {
     });
 }
 exports.getTowerDefensePoints = getTowerDefensePoints;
+function getTowerData(id) {
+    return __awaiter(this, void 0, void 0, function () {
+        var data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Tower.findOne({ where: { id: id }, raw: true })];
+                case 1:
+                    data = _a.sent();
+                    return [2 /*return*/, data];
+            }
+        });
+    });
+}
+exports.getTowerData = getTowerData;
