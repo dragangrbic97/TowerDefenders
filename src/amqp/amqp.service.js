@@ -39,17 +39,29 @@ exports.__esModule = true;
 var amqp_connection_1 = require("../amqp/amqp.connection");
 var tower_repo_1 = require("../db/models/tower.repo");
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var channel, QUEUE_2;
+    var channel, QUEUE_1, QUEUE_2, QUEUE_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, (0, amqp_connection_1.initRabbitMq)()];
             case 1:
                 channel = _a.sent();
+                QUEUE_1 = 'towersQueue1';
                 QUEUE_2 = 'maintainerQueue';
-                return [4 /*yield*/, channel.assertQueue(QUEUE_2, {
+                QUEUE_3 = 'towersQueue2';
+                return [4 /*yield*/, channel.assertQueue(QUEUE_1, {
                         durable: true
                     })];
             case 2:
+                _a.sent();
+                return [4 /*yield*/, channel.assertQueue(QUEUE_2, {
+                        durable: true
+                    })];
+            case 3:
+                _a.sent();
+                return [4 /*yield*/, channel.assertQueue(QUEUE_3, {
+                        durable: true
+                    })];
+            case 4:
                 _a.sent();
                 return [4 /*yield*/, channel.consume(QUEUE_2, function (msg) {
                         return __awaiter(this, void 0, void 0, function () {
@@ -95,14 +107,17 @@ var tower_repo_1 = require("../db/models/tower.repo");
                                     case 11:
                                         _a.sent();
                                         _a.label = 12;
-                                    case 12: return [2 /*return*/];
+                                    case 12:
+                                        channel.sendToQueue(QUEUE_1, Buffer.from('update'));
+                                        channel.sendToQueue(QUEUE_3, Buffer.from('update'));
+                                        return [2 /*return*/];
                                 }
                             });
                         });
                     }, {
                         noAck: true
                     })];
-            case 3:
+            case 5:
                 _a.sent();
                 return [2 /*return*/];
         }

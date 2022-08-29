@@ -18,13 +18,18 @@ export async function updateTowerDefensePoints(id: number, points: number) {
 }
 
 export async function getTowerHealthPoints(id: number) {
-    const dataValues = await Tower.findOne({ where: { id: id}, raw:true });
+    const dataValues = await Tower.findOne({ where: { id }, raw:true });
     const {health} = dataValues;
     return health;
 }
 
 export async function getTowerDefensePoints(id: number) {
-    const dataValues = await Tower.findOne({ where: { id: id}, raw:true });
+    const dataValues = await Tower.findOne({ where: { id }, raw:true });
     const {defense} = dataValues;
     return defense;
+}
+
+export async function getTowerData(id: number) {
+    const data = await Tower.findOne({ where: { id }, raw:true });
+    return data;
 }
